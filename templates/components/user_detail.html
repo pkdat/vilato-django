@@ -1,0 +1,113 @@
+{% load markdown_extras %}
+
+<div class="md:flex max-w-7xl mx-auto p-5">
+
+    <div class="md:w-72 md:mr-5 mb-5">
+        <div class="gap-3 items-start sm:flex md:block border dark:border-gray-700  p-5 rounded-md">
+            <!-- avatart -->
+            <div class="w-32 h-32 flex flex-shrink-0 justify-center items-center gap-2 {% if account.is_company %} rounded-md {% else %} rounded-full {% endif %} font-medium align-middle items-center justify-center
+         border dark:border-gray-500 border-gray-300
+         bg-gray-100 text-gray-600  
+        dark:bg-gray-600 dark:text-gray-300 mb-2 mr-2">
+                {% if account.avatar %}
+                <img class="inline-block {% if account.is_company %} rounded-md {% else %} rounded-full {% endif %} ring-2 ring-white dark:ring-gray-800"
+                    src="{{ account.avatar.url }}" alt="Image Description">
+                {% else %}
+                <div class="text-4xl leading-none align-middle" xt-marked="ok">
+                    {{account.username|slice:":1"|title}}
+                </div>
+                {% endif %}
+            </div>
+            <!-- end avatar -->
+            <div>
+                <h1 class="text-2xl mt-3 font-semibold">{{ account}}</h1>
+                <p class="text-gray-500 mb-2">{{account.username}}</p>
+                {% if account.short_description %}
+                <p>{{account.short_description}}</p>
+                {% endif %}
+
+                {% if request.user == account %}
+                <a href="{% url 'account_update_view' %}">
+                    <div
+                        class="w-full py-2 my-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle   transition-all text-sm dark:bg-slate-900  dark:border-gray-700 dark:text-gray-400 ">
+                        Chỉnh sửa thông tin</div>
+                </a>
+                {% else %}
+                {% if account in user.following.all %}
+                <form action="{% url 'account_unfollow_view' account.id %}" method="POST">{% csrf_token %}
+                    <button type="submit"
+                        class="w-full py-2 my-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium  text-gray-700 shadow-sm align-middle bg-gray-50 transition-all text-sm dark:bg-slate-800 dark:border-gray-700 dark:text-gray-400">Đã
+                        theo dõi</button>
+                </form>
+                {% else %}
+                <form action="{% url 'account_follow_view' account.id %}" method="POST">{% csrf_token %}
+                    <button type="submit"
+                        class="w-full py-2 my-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle   transition-all text-sm dark:bg-slate-900  dark:border-gray-700 dark:text-gray-400 ">Theo
+                        dõi</button>
+                </form>
+                {% endif %}
+                {% endif %}
+
+                <div class="text-gray-600">
+                    {{account.followers.count}} người theo dõi
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="flex-1">
+        {% if account.long_description %}
+        <div>
+            <div class="border dark:border-gray-700  p-5 rounded-md flex flex-col mb-5">
+                <div class="markdown">
+                    {{account.long_description | markdown| safe}}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="border dark:border-gray-700  p-5 rounded-md flex flex-col">
+            {% if account.is_company %}
+            <div class="flex items-center justify-between">
+                <h2 class="font-semibold mb-3 text-xl">Việc làm</h2>
+                <div>
+                    <a href="{% url 'account_job_post_list_view' account.id %}"
+                        class="inline-flex items-center gap-2 text-sm font-medium text-blue-500 hover:text-blue-700">
+                        {% if jobs %}
+                        Xem tất cả
+                        <svg class="w-2.5 h-auto" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                        </svg>
+                        {% endif %}
+
+                    </a>
+                </div>
+            </div>
+            <div class="mb-5">
+                {% include 'components/post_list.html' with posts=jobs hide_pagination=True %}
+            </div>
+            {% endif %}
+            <div class="flex items-center justify-between">
+                <h2 class="font-semibold mb-3 text-xl">Dự án</h2>
+                <div>
+
+                    <a href="{% url 'account_project_post_list_view' account.id %}"
+                        class="inline-flex items-center gap-2 text-sm font-medium text-blue-500 hover:text-blue-700">
+                        {% if projects %}
+                        Xem tất cả <svg class="w-2.5 h-auto" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                        </svg>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            <div class="mb-5">
+                {% include 'components/post_list.html' with posts=projects hide_pagination=True %}
+            </div>
+        </div>
+    </div>
+</div>

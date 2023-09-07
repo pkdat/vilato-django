@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @layer base {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  :hover::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+  }
+} */
+  
+
+.fieldFormWrapper  .field  input[type="text"],
+.fieldFormWrapper  .field  input[type="password"],
+.fieldFormWrapper  .field  input[type="email"] {
+    @apply py-3 px-4  block w-full border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400;
+}
+
+.fieldFormWrapper .field input[type="checkbox"] {
+  @apply  shrink-0  border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800  ;
+}
+
+
+.fieldFormWrapper .field  input[type="file"]  {
+  @apply py-3 px-4 mt-2 block w-full border border-gray-300 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+  file:bg-transparent file:border-0
+
+  dark:file:text-gray-400;
+}
+.fieldFormWrapper .field {
+  @apply text-sm;
+}
+
+.fieldFormWrapper {
+  @apply mb-2;
+}
+
+.fieldFormWrapper  .field  textarea,
+textarea {
+  @apply py-3 px-4 block w-full border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400;
+}
+
+.home_page_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+}
+
+.markdown {
+  @apply prose dark:prose-invert;
+  max-width: unset;
+}

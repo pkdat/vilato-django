@@ -1,0 +1,21 @@
+{% extends 'slots/base.html' %}
+
+{% block body %}
+
+
+<div class="w-full dark:bg-gray-800 bg-white">
+    <div class="min-h-[80vh]">
+        {% block navbar %}
+        {% include 'components/navbar/navbar.html' %}
+        {% endblock %}
+
+        {% block search %}{% endblock %}
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+
+    {% include 'components/footer.html' %}
+</div>
+
+{% endblock body %}

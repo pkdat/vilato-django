@@ -1,0 +1,21 @@
+{% extends 'slots/page.html' %}
+{% block title %}Project Post List{% endblock %}
+
+{% block navbar %}
+{% include 'components/navbar/navbar.html' with page_projects=True %}
+{% endblock %}
+
+{% block search %}
+    {% include 'components/search.html' with search_title="Tìm kiếm ý tưởng" search_placeholder="Nhập tên dự án, công nghệ, từ khóa..." %}
+{% endblock %}
+
+{% block content %}
+<div class="dark:bg-gray-800 bg-white">
+    <div class="h-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 pb-6 lg:pb-16">
+        <div class="flex font-medium pb-4 items-center justify-between">
+            <div class="text-lg">{{posts.paginator.count}} dự án</div>
+        </div>
+        {% include 'components/post_list.html' with posts=posts %}
+    </div>
+</div>
+{% endblock content %}

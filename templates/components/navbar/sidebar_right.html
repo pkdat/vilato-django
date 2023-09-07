@@ -1,0 +1,291 @@
+{% if user.is_authenticated %}
+
+{% if user.is_staff %}
+<div class="hs-tooltip inline-block [--placement:bottom]">
+    <a type="button"
+        class="hs-tooltip-toggle w-8 h-8 inline-flex justify-center items-center gap-2 rounded-md bg-gray-50 border border-gray-300 text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-white/[.05] dark:hover:border-white/[.1] dark:hover:text-white"
+        href="{% url 'admin:index' %}">
+        <svg class="w-3 h-3" width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
+              </svg>
+        <span
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+            role="tooltip">
+            Đi đến trang Admin
+        </span>
+    </a>
+</div>
+{% endif %}
+
+<div class="hs-tooltip inline-block [--placement:bottom]">
+    <a type="button"
+        class="hs-tooltip-toggle w-8 h-8 inline-flex justify-center items-center gap-2 rounded-md bg-gray-50 border border-gray-300 text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-white/[.05] dark:hover:border-white/[.1] dark:hover:text-white"
+        href="{% url 'project_create_view' %}">
+        <svg class="w-3 h-3" width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 16 16">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 1v16M1 9h16" />
+        </svg>
+        <span
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+            role="tooltip">
+            Tạo bài viết mới
+        </span>
+    </a>
+</div>
+
+<div class="hs-tooltip inline-block [--placement:bottom]">
+    <a type="button"
+        class="hs-tooltip-toggle w-8 h-8 inline-flex justify-center items-center gap-0 rounded-md bg-gray-50 border border-gray-300 text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-white/[.05] dark:hover:border-white/[.1] dark:hover:text-white"
+        href="{% url 'my_inbox_list_view' %}">
+        <svg class="w-3.5 h-3.5" width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 18 18">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M1 10h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H17M1 10v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M1 10l2-9h12l2 9"/>
+              </svg>
+        <span
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+            role="tooltip">
+            Hộp thư đến
+        </span>
+    </a>
+</div>
+
+<button type="button" class="inline-flex flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] {% if user.is_company %} rounded-md {% else %} rounded-full {% endif %} font-medium  align-middle    transition-all 
+     border dark:border-gray-500 border-gray-300
+     bg-gray-100 text-gray-600  
+    dark:bg-gray-600 dark:text-gray-300" data-hs-overlay="#hs-overlay-sidebar-right">
+    <span class="sr-only">Toggle Navigation</span>
+    {% if user.avatar %}
+    <img class="inline-block h-[2.375rem] w-[2.375rem] {% if user.is_company %} rounded-md {% else %} rounded-full {% endif %} ring-2 ring-white dark:ring-gray-800"
+        src="{{ user.avatar.url }}" alt="Image Description">
+    {% else %}
+    <span class="font-medium leading-none" xt-marked="ok">{{user.username|slice:":1"|title}}</span>
+    {% endif %}
+</button>
+
+{% else %}
+<!-- Authentication -->
+<a class="flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:my-6  dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500"
+    href="{% url 'login_view' %}">
+    Đăng nhập
+</a>
+
+<a type="button"
+    class="py-2 px-3 hidden sm:inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+    href="{% url 'company_signup_view' %}">
+    Tuyển dụng
+    <svg class="w-2.5 h-auto" width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M1 7C0.447715 7 -3.73832e-07 7.44771 -3.49691e-07 8C-3.2555e-07 8.55228 0.447715 9 1 9L13.0858 9L7.79289 14.2929C7.40237 14.6834 7.40237 15.3166 7.79289 15.7071C8.18342 16.0976 8.81658 16.0976 9.20711 15.7071L16.0303 8.88388C16.5185 8.39573 16.5185 7.60427 16.0303 7.11612L9.20711 0.292893C8.81658 -0.0976318 8.18342 -0.0976318 7.79289 0.292893C7.40237 0.683417 7.40237 1.31658 7.79289 1.70711L13.0858 7L1 7Z"
+            fill="currentColor" />
+    </svg>
+</a>
+
+<a class="hidden sm:flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:my-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500"
+    href="{% url 'developer_signup_view' %}">
+    Tìm việc
+    <svg class="w-2.5 h-auto" width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M1 7C0.447715 7 -3.73832e-07 7.44771 -3.49691e-07 8C-3.2555e-07 8.55228 0.447715 9 1 9L13.0858 9L7.79289 14.2929C7.40237 14.6834 7.40237 15.3166 7.79289 15.7071C8.18342 16.0976 8.81658 16.0976 9.20711 15.7071L16.0303 8.88388C16.5185 8.39573 16.5185 7.60427 16.0303 7.11612L9.20711 0.292893C8.81658 -0.0976318 8.18342 -0.0976318 7.79289 0.292893C7.40237 0.683417 7.40237 1.31658 7.79289 1.70711L13.0858 7L1 7Z"
+            fill="currentColor" />
+    </svg>
+</a>
+<!-- End Authentication -->
+
+<button type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-400"
+    data-hs-overlay="#hs-overlay-sidebar-right">
+    <span class="sr-only">Toggle Navigation</span>
+    <svg class="hs-overlay-open:hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+        fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
+        </path>
+    </svg>
+</button>
+{% endif %}
+
+
+
+<div id="hs-overlay-sidebar-right"
+    class="hs-overlay hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 right-0 transition-all duration-300 transform h-full max-w-xs w-full z-[60] bg-white border-l dark:bg-gray-800 dark:border-gray-700"
+    tabindex="-1">
+
+    
+    <div class="flex flex-col h-full">
+        <div class="flex justify-between items-center px-4 border-b dark:border-gray-700 gap-4 py-5">
+            {% if user.is_authenticated %}
+            <div class="flex-shrink-0 group block">
+                <div class="flex items-center">
+                    {% if user.avatar %}
+                    <img class="inline-flex flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] {% if user.is_company %} rounded-md {% else %} rounded-full {% endif %} font-medium  align-middle    transition-all 
+                        border dark:border-gray-500 border-gray-300
+                        bg-gray-100 text-gray-600  
+                       dark:bg-gray-600 dark:text-gray-300" src="{{ user.avatar.url }}" alt="Image Description">
+                    {% else %}
+                    <span class="inline-flex flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] {% if user.is_company %} rounded-md {% else %} rounded-full {% endif %}  align-middle    transition-all 
+                        border dark:border-gray-500 border-gray-300
+                        bg-gray-100 text-gray-600  
+                       dark:bg-gray-600 dark:text-gray-300 font-medium leading-none"
+                        xt-marked="ok">{{user.username|slice:":1"|title}}</span>
+                    {% endif %}
+                    <div class="ml-3">
+                        <h3 class="font-semibold text-gray-800 dark:text-white">{{user|title}}</h3>
+                        <p class="text-sm font-medium text-gray-400">{{user.username}}</p>
+                    </div>
+
+                </div>
+            </div>
+            {% else %}
+            <h3 class="font-bold text-gray-800 dark:text-white">
+                Tùy chọn
+            </h3>
+            {% endif %}
+            <button type="button"
+                class="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white text-sm dark:text-gray-500 dark:hover:text-gray-400 dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
+                data-hs-overlay="#hs-overlay-sidebar-right">
+                <span class="sr-only">Close modal</span>
+                <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00648C7.05632 7.10078 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35252 7.80458 6.25822 7.71348L3.61171 5.06702L0.965207 7.71348C0.870907 7.80458 0.744606 7.85498 0.613506 7.85388C0.482406 7.85268 0.357007 7.80018 0.264297 7.70738C0.171597 7.61468 0.119017 7.48928 0.117877 7.35818C0.116737 7.22708 0.167126 7.10078 0.258206 7.00648L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z"
+                        fill="currentColor" />
+                </svg>
+            </button>
+        </div>
+        <div class="flex-1 overflow-auto">
+            <nav class="hs-accordion-group p-2 w-full flex flex-col flex-wrap" data-hs-accordion-always-open="">
+                <ul class="space-y-1.5">
+                    <li>
+                        <!-- Theme -->
+                        <a class="hs-dark-mode-active:hidden hs-dark-mode group flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="#!" data-hs-theme-click-value="dark">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                viewBox="0 0 18 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1"
+                                    d="M8.509 5.75c0-1.493.394-2.96 1.144-4.25h-.081a8.5 8.5 0 1 0 7.356 12.746A8.5 8.5 0 0 1 8.509 5.75Z" />
+                            </svg>
+                            Sử dụng nền tối
+                        </a>
+                        <a class="hs-dark-mode-active:flex hidden hs-dark-mode group items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="#!" data-hs-theme-click-value="light">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1"
+                                    d="M10 3V1m0 18v-2M5.05 5.05 3.636 3.636m12.728 12.728L14.95 14.95M3 10H1m18 0h-2M5.05 14.95l-1.414 1.414M16.364 3.636 14.95 5.05M14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+                            </svg>
+                            Sử dụng nền sáng
+                        </a>
+                        <!-- End Theme -->
+                    </li>
+
+
+                    {% if user.is_authenticated %}
+                    <li>
+                        <form
+                            class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            action="{% url 'logout_view' %}" method="POST">{% csrf_token %}
+                            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 16 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1"
+                                    d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3" />
+                            </svg>
+                            <button class="flex-auto text-left" type="submit">Đăng xuất</button>
+                        </form>
+                    </li>
+                    <li class="border-b dark:border-gray-700"></li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="{% url 'my_project_post_list_view' %}">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1"
+                                    d="M18 5h1v12a2 2 0 0 1-2 2m0 0a2 2 0 0 1-2-2V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v15a2 2 0 0 0 2 2h14ZM10 4h2m-2 3h2m-8 3h8m-8 3h8m-8 3h8M4 4h3v3H4V4Z" />
+                            </svg>
+                            Bài viết của tôi
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="{% url 'my_sended_inbox_list_view' %}">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5.5 6.5h.01m4.49 0h.01m4.49 0h.01M18 1H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
+                                  </svg>
+                            Tin đã gửi
+                        </a>
+                    </li>
+                    <li class="border-b dark:border-gray-700 m-2"></li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="{% url 'account_detail_view' user.id %}">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M10 19a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 11 14H9a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 10 19Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                  </svg>
+                            Tài khoản của tôi
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="{% url 'account_update_view' %}">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z"/>
+                                  </svg>
+                            Chỉnh sửa tài khoản
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="{% url 'password_change' %}">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1">
+                                    <path
+                                        d="M19 11V9a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L12 2.757V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L2.929 4.343a1 1 0 0 0 0 1.414l.536.536L2.757 8H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535L8 17.243V18a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H18a1 1 0 0 0 1-1Z" />
+                                    <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                </g>
+                            </svg>
+                            Đổi mật khẩu
+                        </a>
+                    </li>
+
+                    {% else %}
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="{% url 'login_view' %}">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="none" viewBox="0 0 18 15">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1"
+                                    d="M1 7.5h11m0 0L8 3.786M12 7.5l-4 3.714M12 1h3c.53 0 1.04.196 1.414.544.375.348.586.82.586 1.313v9.286c0 .492-.21.965-.586 1.313A2.081 2.081 0 0 1 15 14h-3" />
+                            </svg>
+                            Đăng nhập
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="{% url 'company_signup_view' %}">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            fill="none" viewBox="0 0 18 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 1h12M3 1v16M3 1H2m13 0v16m0-16h1m-1 16H3m12 0h2M3 17H1M6 4h1v1H6V4Zm5 0h1v1h-1V4ZM6 8h1v1H6V8Zm5 0h1v1h-1V8Zm-3 4h2a1 1 0 0 1 1 1v4H7v-4a1 1 0 0 1 1-1Z"/>
+                          </svg>
+                            Tạo tài khoản công ty
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
+                            href="{% url 'developer_signup_view' %}">
+                            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"></path>
+                                </svg>
+                            Tạo tài khoản nhà phát triển
+                        </a>
+                    </li>
+
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

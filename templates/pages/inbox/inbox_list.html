@@ -1,0 +1,38 @@
+{% extends 'slots/page.html' %}
+{% block title %}Đã gửi{% endblock %}
+
+{% block search %}
+<div class="border-b bg-gray-200 dark:bg-gray-800 border-gray-300 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto text-center p-4 sm:p-6 lg:p-8">
+        <h1 class="text-2xl sm:text-3xl text-gray-900 dark:text-gray-400" xt-marked="ok">Hộp thư đến
+        </h1>
+        <p class="mt-4 md:text-lg text-gray-600 dark:text-gray-400" xt-marked="ok">Bình luận và đơn ứng tuyển được gửi
+            cho bạn</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="dark:bg-gray-800 bg-white">
+    <div class="h-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 pb-6 lg:pb-16">
+        <div class="flex font-medium pb-4 items-center justify-between">
+            <div class="text-lg">{{inboxs.paginator.count}} tin chưa đọc</div>
+            <div>
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button type="button"
+                        class="py-1 px-4 inline-flex justify-center items-center gap-2 -ml-px first:rounded-l first:ml-0 last:rounded-r border  text-sm bg-blue-600 text-white dark:border-gray-700">
+                        <a href="{% url 'my_inbox_list_view' %}">Chưa đọc</a>
+                    </button>
+    
+                    <button type="button"
+                        class="py-1 px-4 inline-flex justify-center items-center gap-2 -ml-px first:rounded-l first:ml-0 last:rounded-r border text-sm hover:bg-gray-100  transition-all dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
+                        <a href="{% url 'my_readed_inbox_list_view'%}">Đã đọc</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% include 'components/comment_list.html' with inbox_list_page=True %}
+        
+    </div>
+</div>
+{% endblock content %}

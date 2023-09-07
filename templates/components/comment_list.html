@@ -1,0 +1,116 @@
+{% load markdown_extras %}
+
+{% for inbox in inboxs %}
+<div class="flex flex-col mb-4  border-2 dark:border-gray-600 rounded-md">
+    <div class="border-inherit">
+        <div class="flex items-start justify-between">
+            <div class="p-4">
+                <h3 class="mb-2 text-xl">
+                    {% if inbox.post.is_job_post %} Ứng tuyển {% else %} Bình luận về {% endif %}
+                    <a class=" hover:underline"
+                        href="{% url 'post_detail_view' inbox.post.id %}">{{inbox.post.title}}</a>
+                </h3>
+                <p class="text-xs text-gray-500">
+                    Gửi bởi
+                    <a class="hover:underline" href="{% url 'account_detail_view' inbox.author.id %}">
+                        {{inbox.author}}
+                    </a>
+                    <span>ngày {{ inbox.updated_at|date:'d/m/Y H:m' }}</span>
+                </p>
+            </div>
+            <div class="p-5">
+                {% if inbox_list_page %}
+                <form action="{% url 'inbox_deactive_view' inbox.id %}" method="POST" class="hs-tooltip">{% csrf_token %}
+                    <button type="submit"
+                        class="hs-tooltip-toggle py-2 px-3 inline-flex justify-center items-center gap-x-1.5 sm:gap-x-2 rounded-md font-medium bg-white text-gray-700 align-middle hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-300 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:focus:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-slate-900 dark:focus:ring-offset-blue-500">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M1 8v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8M1 8a1 1 0 0 1 .4-.8l8-5.75a1 1 0 0 1 1.2 0l8 5.75a1 1 0 0 1 .4.8M1 8l8.4 6.05a1 1 0 0 0 1.2 0L19 8"/>
+                              </svg>
+                        <span
+                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-black"
+                            role="tooltip">
+                            Đánh dấu là đã đọc
+                        </span>
+                    </button>
+                </form>
+                {% elif readed_inbox_list_page %}
+                <form action="{% url 'inbox_active_view' inbox.id %}" method="POST" class="hs-tooltip">{% csrf_token %}
+                    <button type="submit"
+                        class="hs-tooltip-toggle py-2 px-3 inline-flex justify-center items-center gap-x-1.5 sm:gap-x-2 rounded-md font-medium bg-white text-gray-700 align-middle hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-300 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:focus:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-slate-900 dark:focus:ring-offset-blue-500">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="none" fill="none" viewBox="0 0 20 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m19 2-8.4 7.05a1 1 0 0 1-1.2 0L1 2m18 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1m18 0v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2"/>
+                              </svg>
+                        <span
+                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-black"
+                            role="tooltip">
+                            Đánh dấu là chưa đọc
+                        </span>
+                    </button>
+                </form>
+                {% elif sended_inbox_list_page %}
+
+                <div class="hs-dropdown relative inline-flex">
+                    <button type="button" id="blog-article-share-dropdown"
+                        class="hs-dropdown-toggle py-2 px-3 inline-flex justify-center items-center gap-x-1.5 sm:gap-x-2 rounded-md font-medium bg-white text-gray-700 align-middle hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-300 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:focus:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-slate-900 dark:focus:ring-offset-blue-500">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" viewBox="0 0 16 3">
+                            <path
+                                d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                        </svg>
+                    </button>
+                    <div class="boder-2 hs-dropdown-menu w-56 transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mb-1 z-10 bg-white shadow-sm rounded-xl p-2 dark:bg-gray-800 dark:border-gray-700 border"
+                        aria-labelledby="blog-article-share-dropdown">
+                        <form method="post" action="{% url 'inbox_delete_view' inbox.id %}">{% csrf_token %}
+                            <button type="submit" class="w-full flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="none" viewBox="0 0 18 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="1"
+                                            d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
+                                    </svg>
+                                    Xóa
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class=" p-5 border-t-2 border-inherit">
+            <div class="markdown">
+                {{inbox.body | markdown| safe}}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% empty %}
+<div
+    class="min-h-[15rem] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+    <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
+        <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+            Không có tin nào
+        </h3>
+        <p class="mt-2 text-gray-800 dark:text-gray-400">
+            Tìm kiếm dự án và công việc mơ ước với Vilato.
+        </p>
+        <a class="inline-flex items-center gap-2 mt-5 text-sm font-medium text-blue-500 hover:text-blue-700"
+            href="{% url 'home_view' %}">
+            Xem thêm
+            <svg class="w-2.5 h-auto" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+        </a>
+    </div>
+</div>
+{% endfor%}
+{% if inboxs %}
+{% include 'components/pagination.html' with page_obj=inboxs %}
+{% endif %}

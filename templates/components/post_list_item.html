@@ -1,0 +1,100 @@
+{% load markdown_extras %}
+
+{% if post.is_job_post %}
+<div class="flex flex-col mb-4  border-2 dark:border-gray-600 rounded-md">
+    <div class="border-inherit">
+        <h3 class="p-4 text-2xl gap-2">
+            <p class="mb-1 flex items-center gap-2 text-gray-600 text-xs">
+                Cập nhật {{ post.updated_at|date:'d/m/Y' }}
+            </p>
+            <div>
+                <a href="{{ post.get_absolute_url }}" class="text-blue-500 font-bold">{{ post.title }}</a>
+            </div>
+            <div class="flex items-center pt-3">
+                {% if post.author.avatar %}
+                <a href="{{ post.author.get_absolute_url }}" class="flex-shrink-0 justify-center items-center">
+                    <img class="gap-2 h-12 w-12 rounded-md font-medium  align-middle    transition-all 
+                border dark:border-gray-500 border-gray-300
+                bg-gray-100 text-gray-600  
+               dark:bg-gray-600 dark:text-gray-300" src="{{ post.author.avatar.url }}" alt="Image Description"></a>
+                {% else %}
+                <a href="{{ post.author.get_absolute_url }}" class="flex-shrink-0 justify-center items-center">
+                    <div class="flex text-sm">
+                        <span class="inline-flex justify-center items-center gap-2 h-12 w-12 rounded-md  align-middle    transition-all 
+                border dark:border-gray-500 border-gray-300 
+                bg-gray-100 text-gray-600  
+               dark:bg-gray-600 dark:text-gray-300 font-medium leading-none"
+                            xt-marked="ok">{{post.author.username|slice:":1"|title}}</span>
+                    </div>
+                </a>
+                {% endif %}
+                <a href="{{ post.author.get_absolute_url }}" class="pl-2 text-gray-600 text-sm">{{ post.author }}</a>
+            </div>
+        </h3>
+        {% if post.description %}
+        <div class="border-t-2 border-inherit px-4">
+            <div class="markdown">
+                {{post.description | markdown| safe}}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+<div class="flex flex-col mb-4  border-2 dark:border-gray-600 rounded-md">
+    {% if not in_detail_view %}
+    {% if post.thumbnail %}
+    <div class="rounded-t-md border-inherit  border-b-2 aspect-[4/1] overflow-hidden">
+        <a href="{{ post.get_absolute_url }}" class=""><img class="w-full h-full object-cover object-center"
+                src="{{ post.thumbnail.url }}" alt="Image Description"></a>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <div class="border-inherit">
+        <h3 class="p-4 text-lg gap-2 ">
+            <svg class="w-4 h-4 inline-block align-middle text-gray-500 dark:text-slate-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 17V2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M5 15V1m8 18v-4" />
+            </svg>
+            <a href="{{ post.get_absolute_url }}" class="text-blue-500 font-bold">{{ post.title }} / </a>
+            {% if post.author.avatar %}
+            <a href="{{ post.author.get_absolute_url }}" class="flex-shrink-0 justify-center items-center">
+                <img class="inline-block align-middle gap-2 h-5 w-5 {% if post.author.is_company %} rounded-sm {% else %} rounded-full {% endif %} font-medium transition-all 
+                    border dark:border-gray-500 border-gray-300
+                    bg-gray-100 text-gray-600  
+                   dark:bg-gray-600 dark:text-gray-300" src="{{ post.author.avatar.url }}" alt="Image Description"></a>
+            {% else %}
+
+            {% endif %}
+            <a href="{{ post.author.get_absolute_url }}" class="text-blue-500">{{ post.author }}</a>
+
+        </h3>
+        {% if post.description %}
+        <div class=" px-4 border-t-2 border-inherit">
+            <div class="markdown">
+                {{post.description | markdown| safe}}
+            </div>
+        </div>
+        {% endif %}
+
+
+    </div>
+
+    <p class="flex items-center gap-2 text-gray-500 border-t-2 border-inherit p-4 text-xs">
+        Cập nhật lần cuối {{ post.updated_at|date:'d/m/Y' }}
+
+        {% if not in_detail_view %}
+        <span>·</span>
+
+        <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="m11.479 1.712 2.367 4.8a.532.532 0 0 0 .4.292l5.294.769a.534.534 0 0 1 .3.91l-3.83 3.735a.534.534 0 0 0-.154.473l.9 5.272a.535.535 0 0 1-.775.563l-4.734-2.49a.536.536 0 0 0-.5 0l-4.73 2.487a.534.534 0 0 1-.775-.563l.9-5.272a.534.534 0 0 0-.154-.473L2.158 8.48a.534.534 0 0 1 .3-.911l5.294-.77a.532.532 0 0 0 .4-.292l2.367-4.8a.534.534 0 0 1 .96.004Z" />
+        </svg>
+        {{post.post_set.count}}
+        {% endif %}
+        
+    </p>
+</div>
+{% endif %}

@@ -1,0 +1,67 @@
+{% load markdown_extras %}
+
+{% for post in posts %}
+
+<div class="flex flex-col mb-4  border-2 dark:border-gray-600 rounded-md">
+    {% if not post.is_public %}
+    <div class="bg-gray-800/[.1] border border-gray-200 text-sm text-gray-800 p-4 dark:bg-gray-900/[.1] dark:border-gray-700 dark:text-white" xt-marked="ok">
+        <span class="font-bold mr-2" xt-marked="ok">Không công khai</span> Chỉ mình bạn có thể xem bài viết.
+      </div>
+    {% endif %}
+
+    <div class="border-inherit">
+        <h3 class="p-4 text-lg gap-2 ">
+            {% if post.is_job_post %}
+            <svg class="w-4 h-4 inline-block align-baseline text-gray-500 dark:text-slate-400" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M1 10c1.5 1.5 5.25 3 9 3s7.5-1.5 9-3m-9-1h.01M2 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1ZM14 5V3a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2h8Z"></path>
+            </svg>
+            {% else %}
+            <svg class="w-4 h-4 inline-block align-middle text-gray-500 dark:text-slate-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 17V2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M5 15V1m8 18v-4" />
+            </svg>
+            {% endif %}
+            
+            <a href="{{ post.get_absolute_url }}" class="pl-2 text-blue-500 font-bold">{{ post.title }}</a>
+        </h3>
+
+    </div>
+
+    <p class="flex items-center gap-2 text-gray-500 border-t-2 border-inherit p-4 text-xs">
+        {% if post.is_job_post %}
+        Việc làm
+        {% else %}
+        Dự án
+        {% endif %}
+
+        <span>·</span>
+
+        Cập nhật lần cuối {{ post.updated_at|date:'d/m/Y' }}
+    </p>
+</div>
+{% empty %}
+<div
+    class="min-h-[15rem] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+    <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
+        <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+            Không có bài viết nào
+        </h3>
+        <p class="mt-2 text-gray-800 dark:text-gray-400">
+            Tìm kiếm dự án và công việc mơ ước với Vilato.
+        </p>
+        <a class="inline-flex items-center gap-2 mt-5 text-sm font-medium text-blue-500 hover:text-blue-700" href="#">
+            Xem thêm
+            <svg class="w-2.5 h-auto" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+        </a>
+    </div>
+</div>
+{% endfor%}
+
+{% if posts %}
+{% include 'components/pagination.html' with page_obj=posts %}
+{% endif %}

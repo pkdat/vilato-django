@@ -1,0 +1,34 @@
+{% extends 'slots/page.html' %}
+{% block title %}Project Post List{% endblock %}
+
+{% block search %}
+    {% include 'components/search.html' with search_title="Dự án từ những tài khoản yêu thích" search_placeholder="Nhập tên dự án, công nghệ, từ khóa..."  gray=True %}
+{% endblock %}
+
+{% block content %}
+<div class="dark:bg-gray-800 bg-white">
+    <div class="h-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 pb-6 lg:pb-16">
+        <div class="flex font-medium pb-4 items-center justify-between">
+            <div class="text-lg">{{posts.paginator.count}} bài viết</div>
+            <div>
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button type="button"
+                        class="py-1 px-4 inline-flex justify-center items-center gap-2 -ml-px first:rounded-l first:ml-0 last:rounded-r border text-sm hover:bg-gray-100  transition-all dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
+                        <a href="{% url 'following_post_list_view' %}">Tất cả</a>
+                    </button>
+                    
+                <button type="button"
+                    class="py-1 px-4 inline-flex justify-center items-center gap-2 -ml-px first:rounded-l first:ml-0 last:rounded-r border  text-sm bg-blue-600 text-white dark:border-gray-700">
+                    <a href="{% url 'following_project_post_list_view' %}">Dự án</a>
+                </button>
+                <button type="button"
+                    class="py-1 px-4 inline-flex justify-center items-center gap-2 -ml-px first:rounded-l first:ml-0 last:rounded-r border text-sm hover:bg-gray-100  transition-all dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
+                    <a href="{% url 'following_job_post_list_view' %}">Việc làm</a>
+                </button>
+                </div>
+            </div>
+        </div>
+        {% include 'components/post_list.html' with posts=posts %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vilato{% endblock %}</title>
+    <link rel="shortcut icon" type="image/ico" href="{% static 'images/favicon.ico' %}">
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% endcompress %}
+</head>
+
+<body class="dark:bg-gray-800 bg-white text-gray-900 dark:text-gray-400 ">
+    {% block body %}{% endblock %}
+    <script src="{% static 'preline.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+</body>
+
+</html>
